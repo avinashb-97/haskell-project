@@ -5,6 +5,8 @@ module Main where
 
 import Database
 import Fetch
+import Parse
+import Types
 
 main :: IO ()
 main =  do
@@ -15,5 +17,12 @@ main =  do
     let url = "https://www.timeshighereducation.com/sites/default/files/the_data_rankings/world_university_rankings_2021_0__fa224219a267a5b9c4287386a97c70ea.json"
     print "Downloading..."
     json <- download url
-    print json
+    
+    print "Parsing..."
+    case (parseRecords json) of
+                Left err -> print err
+                Right recs -> do
+                    print "Parsing Done"
+                    print (head $ datas recs)
+                    print "Saved!"
             

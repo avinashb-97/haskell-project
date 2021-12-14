@@ -1,25 +1,18 @@
 {-# LANGUAGE DeriveGeneric #-}
 
 module Types (
-    -- University (..),
-    -- Record (..),
-    -- Record (..)
+    University (..),
+    Record (..)
 ) where
 
--- import GHC.Generics
+import GHC.Generics
 
--- data University = University {
---     name :: String,
---     rank :: Int,
---     location :: String
--- } deriving (Show)
+data University = University {
+    name :: String,
+    rank :: String,
+    location :: String
+} deriving (Show, Generic)
 
--- data Record = Record {
---     university :: [University],
---     population :: Maybe Int
--- } deriving (Show, Generic)
-
-
--- data Records = Records {
---     records :: [Record]
--- } deriving (Show, Generic)
+data Record = Record {
+    datas :: [University]
+} deriving (Show, Generic)
