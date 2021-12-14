@@ -1,6 +1,8 @@
 module Main where
 
-import Lib
+import Database (initialiseDB)
 
 main :: IO ()
-main = putStrLn "Hello World";
+main =  do
+    conn <- initialiseDB
+    print "Hello"
