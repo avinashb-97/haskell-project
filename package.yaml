@@ -24,6 +24,7 @@ dependencies:
 - sqlite-simple
 - http-conduit
 - aeson
+- bytestring
 
 library:
   source-dirs: src
