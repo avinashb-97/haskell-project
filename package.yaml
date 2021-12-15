@@ -25,6 +25,8 @@ dependencies:
 - http-conduit
 - aeson
 - bytestring
+- unicode-show
+- with-utf8
 
 library:
   source-dirs: src
