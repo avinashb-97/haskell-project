@@ -19,7 +19,7 @@ data EventEntry = EventEntry {
 
 data DivisionEntry = DivisionEntry{
     id_ :: Int,
-    name :: String
+    division_ :: String
 } deriving (Show)
 
 data Event = Event {
@@ -34,7 +34,7 @@ data Events = Events {
 } deriving (Show, Generic)
 
 data Record = Record {
-    scotland :: Events,
     england_and_wales :: Events,
+    scotland :: Events,
     northern_ireland :: Events
 } deriving (Show, Generic)

@@ -10,6 +10,7 @@ import Types
 import Text.Show.Unicode
 import Main.Utf8 (withUtf8)
 import Types
+import Types (Record(england_and_wales))
 
 main :: IO ()
 main = withUtf8 $ do
@@ -24,6 +25,6 @@ main = withUtf8 $ do
                 Left err -> print err
                 Right recs -> do
                     print "Parsing Done"
-                    print (scotland recs)
+                    saveAllRecord conn recs
                     print "Saved!"
             
