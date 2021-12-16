@@ -4,8 +4,7 @@
 module Database
     ( 
         initialiseDB,
-        saveRecord,
-        saveAllRecord
+        saveRecords
     ) where
 
 import Database.SQLite.Simple
@@ -72,8 +71,8 @@ saveEvent conn div = mapM_ (createEvent conn div)
 saveRecord :: Connection -> Events -> IO ()
 saveRecord conn event = saveEvent conn (division event) (events event)
 
-saveAllRecord :: Connection -> Record -> IO ()
-saveAllRecord conn record = do
+saveRecords :: Connection -> Record -> IO ()
+saveRecords conn record = do
     saveRecord conn (england_and_wales record)
     saveRecord conn (scotland record)
     saveRecord conn (northern_ireland record)

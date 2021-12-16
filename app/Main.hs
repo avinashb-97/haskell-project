@@ -24,6 +24,6 @@ main = withUtf8 $ do
                 Left err -> print err
                 Right recs -> do
                     print "Parsing Done"
-                    saveAllRecord conn recs
+                    saveRecords conn recs
                     print "Saved!"
             
