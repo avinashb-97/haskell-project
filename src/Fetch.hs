@@ -7,6 +7,7 @@ import Network.HTTP.Simple
 
 type URL = String
 
+-- Fetches the data from given URL and returns it in ByteString
 download :: URL -> IO BS.ByteString
 download url = do
     request <- parseRequest url

@@ -27,6 +27,7 @@ dependencies:
 - bytestring
 - unicode-show
 - with-utf8
+- time
 
 library:
   source-dirs: src
