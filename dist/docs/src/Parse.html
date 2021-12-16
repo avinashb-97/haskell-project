@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE DeriveGeneric #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-comment">{-|
+Module      : Parse
+Description : Handles parsing the JSON data to haskell data type and vice-versa
+License     : GPL-3
+-}</span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Parse</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-11"></span><span>    </span><span class="annot"><a href="Parse.html#parseRecords"><span class="hs-identifier">parseRecords</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-12"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Types.html"><span class="hs-identifier">Types</span></a></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Data.Aeson</span></span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.ByteString.Lazy.Char8</span></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">L8</span></span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span id="renameFields"><span class="annot"><span class="annottext">renameFields :: [Char] -&gt; [Char]
+</span><a href="Parse.html#renameFields"><span class="hs-identifier hs-var hs-var">renameFields</span></a></span></span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;england_and_wales&quot;</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;england-and-wales&quot;</span></span><span>
+</span><span id="line-19"></span><span class="annot"><a href="Parse.html#renameFields"><span class="hs-identifier hs-var">renameFields</span></a></span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;northern_ireland&quot;</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><span class="hs-string">&quot;northern-ireland&quot;</span></span><span>
+</span><span id="line-20"></span><span class="annot"><a href="Parse.html#renameFields"><span class="hs-identifier hs-var">renameFields</span></a></span><span> </span><span id="local-6989586621679087172"><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679087172"><span class="hs-identifier hs-var">other</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char]
+</span><a href="#local-6989586621679087172"><span class="hs-identifier hs-var">other</span></a></span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span id="customOptions"><span class="annot"><span class="annottext">customOptions :: Options
+</span><a href="Parse.html#customOptions"><span class="hs-identifier hs-var hs-var">customOptions</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options
+</span><span class="hs-identifier hs-var">defaultOptions</span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-23"></span><span>    </span><span class="annot"><span class="annottext">fieldLabelModifier :: [Char] -&gt; [Char]
+</span><span class="hs-identifier hs-var">fieldLabelModifier</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char]
+</span><a href="Parse.html#renameFields"><span class="hs-identifier hs-var">renameFields</span></a></span><span>
+</span><span id="line-24"></span><span class="hs-special">}</span><span>
+</span><span id="line-25"></span><span>
+</span><span id="line-26"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679087166"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-type">Record</span></a></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-27"></span><span>    </span><span id="local-6989586621679087164"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Record
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Options -&gt; Value -&gt; Parser Record
+forall a.
+(Generic a, GFromJSON Zero (Rep a)) =&gt;
+Options -&gt; Value -&gt; Parser a
+</span><span class="hs-identifier hs-var">genericParseJSON</span></span><span> </span><span class="annot"><span class="annottext">Options
+</span><a href="Parse.html#customOptions"><span class="hs-identifier hs-var">customOptions</span></a></span><span>
+</span><span id="line-28"></span><span>
+</span><span id="line-29"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679087158"><span id="local-6989586621679087160"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span></span></span><span>
+</span><span id="line-30"></span><span>
+</span><span id="line-31"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679087154"><span id="local-6989586621679087156"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-type">Events</span></a></span></span></span><span>
+</span><span id="line-32"></span><span>
+</span><span id="line-33"></span><span class="hs-comment">-- | Parses the given data to Record data type</span><span>
+</span><span id="line-34"></span><span class="annot"><a href="Parse.html#parseRecords"><span class="hs-identifier hs-type">parseRecords</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">L8.ByteString</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span>
+</span><span id="line-35"></span><span id="parseRecords"><span class="annot"><span class="annottext">parseRecords :: ByteString -&gt; Either [Char] Record
+</span><a href="Parse.html#parseRecords"><span class="hs-identifier hs-var hs-var">parseRecords</span></a></span></span><span> </span><span id="local-6989586621679087152"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679087152"><span class="hs-identifier hs-var">json</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; Either [Char] Record
+forall a. FromJSON a =&gt; ByteString -&gt; Either [Char] a
+</span><span class="hs-identifier hs-var">eitherDecode</span></span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679087152"><span class="hs-identifier hs-var">json</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-type">Record</span></a></span></pre></body></html>

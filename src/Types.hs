@@ -1,5 +1,12 @@
 {-# LANGUAGE DeriveGeneric #-}
 
+{-|
+Module      : Types
+Description : Contains the data types used for this project
+License     : GPL-3
+-}
+
+
 module Types (
     EventEntry (..),
     DivisionEntry (..),

@@ -1,6 +1,12 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+{-|
+Module      : Main
+Description : Handles the user interaction and showing data to user
+License     : GPL-3
+-}
+
 module Main where
 
 import Database
@@ -13,7 +19,7 @@ import Types
 import Database.SQLite.Simple
 import System.IO
 
--- Downloads, Parses and Saves the data from given api
+-- | Downloads, Parses and Saves the data to the DB from Bank Holidays API
 downloadData :: Connection -> IO ()
 downloadData conn = do
     -- url for JSON data for bank holidays in UK from 2017 to 2023
@@ -29,24 +35,25 @@ downloadData conn = do
                     print "Saved data to DB!"
 
 
--- Gets and prints all the holidays in the division in current year
+-- | Fetches from DB and prints all the holidays for the current year for chosen division
 bankHolidaysForCurrentYear :: Connection  -> IO ()
 bankHolidaysForCurrentYear conn = do
     holiday <- queryBankHolidaysForCurrentYear conn
     mapM_ uprint holiday
 
--- Gets and prints all the holidays in the division in a given year
+-- | Fetches from DB and prints all the holidays in a given year for chosen division
 bankHolidaysForGivenYear :: Connection  -> IO ()
 bankHolidaysForGivenYear conn = do
     holiday <- queryBankHolidaysForGivenYear conn
     mapM_ uprint holiday
 
--- Gets and prints next bank holiday
+-- | Fetches from DB and prints next bank holiday for chosen division
 nextBankHoliday :: Connection  -> IO ()
 nextBankHoliday conn = do
     holiday <- queryNextBankHoliday conn
     mapM_ uprint holiday
 
+-- | Main function
 main :: IO ()
 main = withUtf8 $ do
     putStrLn "-----------------------------------------------"

@@ -1,5 +1,12 @@
 {-# LANGUAGE DeriveGeneric #-}
 
+{-|
+Module      : Parse
+Description : Handles parsing the JSON data to haskell data type and vice-versa
+License     : GPL-3
+-}
+
+
 module Parse (
     parseRecords,
 ) where
@@ -23,5 +30,6 @@ instance FromJSON Event
 
 instance FromJSON Events
 
+-- | Parses the given data to Record data type
 parseRecords :: L8.ByteString -> Either String Record
 parseRecords json = eitherDecode json :: Either String Record

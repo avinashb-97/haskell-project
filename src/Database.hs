@@ -1,5 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
-
+{-|
+Module      : Database
+Description : Handles adding and fetching the data
+License     : GPL-3
+-}
 
 module Database
     ( 
@@ -20,6 +24,7 @@ import System.IO
 import Date
 
 
+-- | Initialises the SQLite DB and creates table Divisions and Events if not exists
 initialiseDB :: IO Connection
 initialiseDB = do
         conn <- open "bankHolidays.sqlite"
@@ -35,12 +40,9 @@ initialiseDB = do
             \)"
         return conn
 
+
 instance FromRow DivisionEntry where
     fromRow = DivisionEntry <$> field <*> field
-
-instance FromRow EventEntry where
-    fromRow = EventEntry <$> field <*> field <*> field <*> field
-
     
 instance FromRow Event where
     fromRow = Event <$> field <*> field <*> field
@@ -53,7 +55,7 @@ instance ToRow EventEntry where
     toRow (EventEntry title_ date_ notes_ fk_division)
         = toRow (title_, date_, notes_, fk_division)
 
--- Gets the division data if already present or creates and insert the given division
+-- | Gets the division data if already present or creates and insert the given division
 getOrCreateDivision :: Connection -> String -> IO DivisionEntry
 getOrCreateDivision conn division = do
     results <- queryNamed conn "SELECT * FROM divisions WHERE division=:division" [":division" := division]    
@@ -63,7 +65,7 @@ getOrCreateDivision conn division = do
         execute conn "INSERT INTO divisions (division) VALUES (?)" (Only (division::String))
         getOrCreateDivision conn division
 
--- Creates and insert a event entry in DB 
+-- | Creates and insert a event entry in DB 
 createEvent :: Connection -> String -> Event -> IO ()
 createEvent conn division event = do
     divisionData <- getOrCreateDivision conn division
@@ -75,22 +77,22 @@ createEvent conn division event = do
     }
     execute conn "INSERT INTO events VALUES (?,?,?,?)" (entry)
 
--- Saves data of all event in a division given division name and list of event
+-- | Saves data of all event in a division given division name and list of event
 saveEvent :: Connection -> String -> [Event] -> IO ()
 saveEvent conn div = mapM_ (createEvent conn div)
 
--- Saves data of all the events in a division
+-- | Saves data of all the events in a division
 saveRecord :: Connection -> Events -> IO ()
 saveRecord conn event = saveEvent conn (division event) (events event)
 
--- Saves data of all the divisions
+-- | Saves all the bank holiday data to the DB with given connection
 saveRecords :: Connection -> Record -> IO ()
 saveRecords conn record = do
     saveRecord conn (england_and_wales record)
     saveRecord conn (scotland record)
     saveRecord conn (northern_ireland record)
 
--- Gets the required division from user
+-- | Gets the required division from user
 getDivisonFromUser :: IO String
 getDivisonFromUser = do
     putStrLn "----------------------"
@@ -106,14 +108,14 @@ getDivisonFromUser = do
     let division = if option <=3  then (divisions !! (option-1)) else "" 
     return $ divisions !! (option-1)
 
--- Gets all the bank holidays in a division in current year
+-- | Gets all the bank holidays in a division in current year
 queryBankHolidaysForCurrentYear :: Connection -> IO [Event]
 queryBankHolidaysForCurrentYear conn = do
     yy <- getCurrentYear 
     let year = show yy
     queryBankHolidaysWithYear conn year
 
--- Gets the year input from user amd returns all the bank holidays in a division for given year
+-- | Fetches data of all the bank holidays in a chosen division for a given year
 queryBankHolidaysForGivenYear :: Connection -> IO [Event]
 queryBankHolidaysForGivenYear conn = do
     putStrLn "Enter a year between 2017 and 2023 : "
@@ -121,14 +123,14 @@ queryBankHolidaysForGivenYear conn = do
     option <- getLine
     queryBankHolidaysWithYear conn option
 
--- Gets all the bank holidays in a division for given year
+-- | Fetches data of all the bank holidays in a chosen division for a given year
 queryBankHolidaysWithYear :: Connection -> String -> IO [Event]
 queryBankHolidaysWithYear conn year = do
     division <- getDivisonFromUser
     putStrLn $ "Looking for bank holidays in " ++ division++" for the year "++year++"..."
     query conn "SELECT title,date,notes FROM events inner join divisions on events.fk_division == divisions.id WHERE division=? and strftime('%Y', events.date) = ?" [division::String, year::String]
 
--- Gets the data for the next bank holiday in a division
+-- | Fetches data from DB for the next Bank Holiday
 queryNextBankHoliday :: Connection -> IO [Event]
 queryNextBankHoliday conn = do
     division <- getDivisonFromUser

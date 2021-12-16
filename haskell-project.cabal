@@ -9,9 +9,9 @@ version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/githubuser/haskell-project#readme>
 homepage:       https://github.com/githubuser/haskell-project#readme
 bug-reports:    https://github.com/githubuser/haskell-project/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2021 Author name here
+author:         Avinash Babu, Yash Raj Kumar Lahoti, Aaditya Chintaman Punekar, Khyati Sharadbhai Patel
+maintainer:     a.babu@se21.qmul.ac.uk, y.lahoti@se21.qmul.ac.uk, a.punekar@se21.qmul.ac.uk, k.patel@se21.qmul.ac.uk
+copyright:      2021 Avinash Babu, Yash Raj Kumar Lahoti, Aaditya Chintaman Punekar, Khyati Sharadbhai Patel
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple

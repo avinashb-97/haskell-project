@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE DeriveGeneric #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-comment">{-|
+Module      : Types
+Description : Contains the data types used for this project
+License     : GPL-3
+-}</span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Types</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-11"></span><span>    </span><span class="annot"><a href="Types.html#EventEntry"><span class="hs-identifier">EventEntry</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-12"></span><span>    </span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier">DivisionEntry</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-13"></span><span>    </span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier">Event</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span>
+</span><span id="line-14"></span><span>    </span><span class="annot"><a href="Types.html#Events"><span class="hs-identifier">Events</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-15"></span><span>    </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier">Record</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">GHC.Generics</span></span><span>
+</span><span id="line-19"></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">data</span><span> </span><span id="EventEntry"><span class="annot"><a href="Types.html#EventEntry"><span class="hs-identifier hs-var">EventEntry</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="EventEntry"><span class="annot"><a href="Types.html#EventEntry"><span class="hs-identifier hs-var">EventEntry</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-21"></span><span>    </span><span id="title_"><span class="annot"><span class="annottext">EventEntry -&gt; String
+</span><a href="Types.html#title_"><span class="hs-identifier hs-var hs-var">title_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-22"></span><span>    </span><span id="date_"><span class="annot"><span class="annottext">EventEntry -&gt; String
+</span><a href="Types.html#date_"><span class="hs-identifier hs-var hs-var">date_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-23"></span><span>    </span><span id="notes_"><span class="annot"><span class="annottext">EventEntry -&gt; String
+</span><a href="Types.html#notes_"><span class="hs-identifier hs-var hs-var">notes_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-24"></span><span>    </span><span id="fk_division"><span class="annot"><span class="annottext">EventEntry -&gt; Int
+</span><a href="Types.html#fk_division"><span class="hs-identifier hs-var hs-var">fk_division</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-25"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679087123"><span id="local-6989586621679087125"><span id="local-6989586621679087127"><span class="annot"><span class="annottext">Int -&gt; EventEntry -&gt; ShowS
+[EventEntry] -&gt; ShowS
+EventEntry -&gt; String
+(Int -&gt; EventEntry -&gt; ShowS)
+-&gt; (EventEntry -&gt; String)
+-&gt; ([EventEntry] -&gt; ShowS)
+-&gt; Show EventEntry
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [EventEntry] -&gt; ShowS
+$cshowList :: [EventEntry] -&gt; ShowS
+show :: EventEntry -&gt; String
+$cshow :: EventEntry -&gt; String
+showsPrec :: Int -&gt; EventEntry -&gt; ShowS
+$cshowsPrec :: Int -&gt; EventEntry -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span>
+</span><span id="line-27"></span><span class="hs-keyword">data</span><span> </span><span id="DivisionEntry"><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-var">DivisionEntry</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="DivisionEntry"><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-var">DivisionEntry</span></a></span></span><span class="hs-special">{</span><span>
+</span><span id="line-28"></span><span>    </span><span id="id_"><span class="annot"><span class="annottext">DivisionEntry -&gt; Int
+</span><a href="Types.html#id_"><span class="hs-identifier hs-var hs-var">id_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span class="hs-special">,</span><span>
+</span><span id="line-29"></span><span>    </span><span id="division_"><span class="annot"><span class="annottext">DivisionEntry -&gt; String
+</span><a href="Types.html#division_"><span class="hs-identifier hs-var hs-var">division_</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-30"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679087113"><span id="local-6989586621679087115"><span id="local-6989586621679087117"><span class="annot"><span class="annottext">Int -&gt; DivisionEntry -&gt; ShowS
+[DivisionEntry] -&gt; ShowS
+DivisionEntry -&gt; String
+(Int -&gt; DivisionEntry -&gt; ShowS)
+-&gt; (DivisionEntry -&gt; String)
+-&gt; ([DivisionEntry] -&gt; ShowS)
+-&gt; Show DivisionEntry
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [DivisionEntry] -&gt; ShowS
+$cshowList :: [DivisionEntry] -&gt; ShowS
+show :: DivisionEntry -&gt; String
+$cshow :: DivisionEntry -&gt; String
+showsPrec :: Int -&gt; DivisionEntry -&gt; ShowS
+$cshowsPrec :: Int -&gt; DivisionEntry -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span id="local-6989586621679087111"><span id="local-6989586621679087112"></span></span><span class="hs-keyword">data</span><span> </span><span id="Event"><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-var">Event</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Event"><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-var">Event</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-33"></span><span>    </span><span id="title"><span class="annot"><span class="annottext">Event -&gt; String
+</span><a href="Types.html#title"><span class="hs-identifier hs-var hs-var">title</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-34"></span><span>    </span><span id="date"><span class="annot"><span class="annottext">Event -&gt; String
+</span><a href="Types.html#date"><span class="hs-identifier hs-var hs-var">date</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-35"></span><span>    </span><span id="notes"><span class="annot"><span class="annottext">Event -&gt; String
+</span><a href="Types.html#notes"><span class="hs-identifier hs-var hs-var">notes</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-36"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679087101"><span id="local-6989586621679087103"><span id="local-6989586621679087105"><span class="annot"><span class="annottext">Int -&gt; Event -&gt; ShowS
+[Event] -&gt; ShowS
+Event -&gt; String
+(Int -&gt; Event -&gt; ShowS)
+-&gt; (Event -&gt; String) -&gt; ([Event] -&gt; ShowS) -&gt; Show Event
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Event] -&gt; ShowS
+$cshowList :: [Event] -&gt; ShowS
+show :: Event -&gt; String
+$cshow :: Event -&gt; String
+showsPrec :: Int -&gt; Event -&gt; ShowS
+$cshowsPrec :: Int -&gt; Event -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(forall x. Event -&gt; Rep Event x)
+-&gt; (forall x. Rep Event x -&gt; Event) -&gt; Generic Event
+forall x. Rep Event x -&gt; Event
+forall x. Event -&gt; Rep Event x
+forall a.
+(forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
+$cto :: forall x. Rep Event x -&gt; Event
+$cfrom :: forall x. Event -&gt; Rep Event x
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span id="local-6989586621679087096"><span id="local-6989586621679087097"></span></span><span class="hs-keyword">data</span><span> </span><span id="Events"><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-var">Events</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Events"><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-var">Events</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-39"></span><span>    </span><span id="division"><span class="annot"><span class="annottext">Events -&gt; String
+</span><a href="Types.html#division"><span class="hs-identifier hs-var hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span>
+</span><span id="line-40"></span><span>    </span><span id="events"><span class="annot"><span class="annottext">Events -&gt; [Event]
+</span><a href="Types.html#events"><span class="hs-identifier hs-var hs-var">events</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-41"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679087087"><span id="local-6989586621679087089"><span id="local-6989586621679087091"><span class="annot"><span class="annottext">Int -&gt; Events -&gt; ShowS
+[Events] -&gt; ShowS
+Events -&gt; String
+(Int -&gt; Events -&gt; ShowS)
+-&gt; (Events -&gt; String) -&gt; ([Events] -&gt; ShowS) -&gt; Show Events
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Events] -&gt; ShowS
+$cshowList :: [Events] -&gt; ShowS
+show :: Events -&gt; String
+$cshow :: Events -&gt; String
+showsPrec :: Int -&gt; Events -&gt; ShowS
+$cshowsPrec :: Int -&gt; Events -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(forall x. Events -&gt; Rep Events x)
+-&gt; (forall x. Rep Events x -&gt; Events) -&gt; Generic Events
+forall x. Rep Events x -&gt; Events
+forall x. Events -&gt; Rep Events x
+forall a.
+(forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
+$cto :: forall x. Rep Events x -&gt; Events
+$cfrom :: forall x. Events -&gt; Rep Events x
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
+</span><span id="line-42"></span><span>
+</span><span id="line-43"></span><span id="local-6989586621679087083"><span id="local-6989586621679087084"></span></span><span class="hs-keyword">data</span><span> </span><span id="Record"><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Record"><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-var">Record</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-44"></span><span>    </span><span id="england_and_wales"><span class="annot"><span class="annottext">Record -&gt; Events
+</span><a href="Types.html#england_and_wales"><span class="hs-identifier hs-var hs-var">england_and_wales</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-type">Events</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-45"></span><span>    </span><span id="scotland"><span class="annot"><span class="annottext">Record -&gt; Events
+</span><a href="Types.html#scotland"><span class="hs-identifier hs-var hs-var">scotland</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-type">Events</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-46"></span><span>    </span><span id="northern_ireland"><span class="annot"><span class="annottext">Record -&gt; Events
+</span><a href="Types.html#northern_ireland"><span class="hs-identifier hs-var hs-var">northern_ireland</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-type">Events</span></a></span><span>
+</span><span id="line-47"></span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679087073"><span id="local-6989586621679087075"><span id="local-6989586621679087077"><span class="annot"><span class="annottext">Int -&gt; Record -&gt; ShowS
+[Record] -&gt; ShowS
+Record -&gt; String
+(Int -&gt; Record -&gt; ShowS)
+-&gt; (Record -&gt; String) -&gt; ([Record] -&gt; ShowS) -&gt; Show Record
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+showList :: [Record] -&gt; ShowS
+$cshowList :: [Record] -&gt; ShowS
+show :: Record -&gt; String
+$cshow :: Record -&gt; String
+showsPrec :: Int -&gt; Record -&gt; ShowS
+$cshowsPrec :: Int -&gt; Record -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">(forall x. Record -&gt; Rep Record x)
+-&gt; (forall x. Rep Record x -&gt; Record) -&gt; Generic Record
+forall x. Rep Record x -&gt; Record
+forall x. Record -&gt; Rep Record x
+forall a.
+(forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
+$cto :: forall x. Rep Record x -&gt; Record
+$cfrom :: forall x. Record -&gt; Rep Record x
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">Generic</span></span><span class="hs-special">)</span><span>
+</span><span id="line-48"></span></pre></body></html>
