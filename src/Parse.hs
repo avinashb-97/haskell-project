@@ -1,4 +1,5 @@
 {-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 {-|
 Module      : Parse
@@ -14,6 +15,7 @@ module Parse (
 import Types
 import Data.Aeson
 import qualified Data.ByteString.Lazy.Char8 as L8
+import Data.Text
 
 renameFields "england_and_wales" = "england-and-wales"
 renameFields "northern_ireland" = "northern-ireland"
@@ -30,6 +32,14 @@ instance FromJSON Event
 
 instance FromJSON Events
 
+instance ToJSON Record where
+    toJSON  = genericToJSON  customOptions
+
+instance ToJSON Event
+
+instance ToJSON Events
+
 -- | Parses the given data to Record data type
 parseRecords :: L8.ByteString -> Either String Record
 parseRecords json = eitherDecode json :: Either String Record
+

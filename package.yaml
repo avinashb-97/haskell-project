@@ -28,6 +28,8 @@ dependencies:
 - unicode-show
 - with-utf8
 - time
+- scotty
+- text
 
 library:
   source-dirs: src

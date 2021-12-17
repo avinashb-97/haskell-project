@@ -16,6 +16,7 @@ module Types (
 ) where
 
 import GHC.Generics
+import qualified Data.Semigroup as String
 
 data EventEntry = EventEntry {
     title_ :: String,
@@ -44,4 +45,9 @@ data Record = Record {
     england_and_wales :: Events,
     scotland :: Events,
     northern_ireland :: Events
+} deriving (Show, Generic)
+
+data UserRequest = UserRequest {
+    div :: String,
+    year :: String
 } deriving (Show, Generic)

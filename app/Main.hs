@@ -1,4 +1,3 @@
-{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 {-|
@@ -18,6 +17,8 @@ import Main.Utf8 (withUtf8)
 import Types
 import Database.SQLite.Simple
 import System.IO
+import WebAPI
+
 
 -- | Downloads, Parses and Saves the data to the DB from Bank Holidays API
 downloadData :: Connection -> IO ()
@@ -31,8 +32,9 @@ downloadData conn = do
                 Left err -> print err
                 Right recs -> do
                     print "Parsing Done"
+                    print "Saving Data to DB..."
                     saveRecords conn recs
-                    print "Saved data to DB!"
+                    print "Data saved to DB"
 
 
 -- | Fetches from DB and prints all the holidays for the current year for chosen division
@@ -55,19 +57,19 @@ nextBankHoliday conn = do
 
 -- | Main function
 main :: IO ()
-main = withUtf8 $ do
-    putStrLn "-----------------------------------------------"
-    putStrLn "  Welcome to the UK Bank Holidays app          "
-    putStrLn "  (1) Download data                            "
-    putStrLn "  (2) View all Bank Holidays for current year  "
-    putStrLn "  (3) View all Bank Holidays for given year    "
-    putStrLn "  (4) Find next Bank Holiday                   "
-    putStrLn "  (5) Quit                                     "
-    putStrLn "-----------------------------------------------"
+main = withUtf8 $  do
+    putStrLn "------------------------------------------------------------------"
+    putStrLn "  Welcome to the UK Bank Holidays app                             "
+    putStrLn "  (1) Download data                                               "
+    putStrLn "  (2) View all Bank Holidays for current year                     "
+    putStrLn "  (3) View all Bank Holidays for given year                       "
+    putStrLn "  (4) Find next Bank Holiday                                      "
+    putStrLn "  (5) Start local server to fetch holidays (Additional Feature)   "
+    putStrLn "  (6) Quit                                                        "
+    putStrLn "------------------------------------------------------------------"
     hSetBuffering stdout NoBuffering
     putStr "Choose an option > "
     option <- readLn :: IO Int
-    print option
 
     -- Initialises DB and Creates Tables If not exists already
     conn <- initialiseDB
@@ -85,7 +87,9 @@ main = withUtf8 $ do
         4 -> do
             nextBankHoliday conn
             main
-        5 -> putStrLn "Thank you for using UK Bank Holidays app."
+        5 -> do 
+            startAPI
+        6 -> putStrLn "Thank you for using UK Bank Holidays app."
         otherwise -> print "You've chosen an invalid option!"
     
             
