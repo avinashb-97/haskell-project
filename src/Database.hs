@@ -139,7 +139,7 @@ queryNextBankHoliday conn = do
     putStrLn $ "Looking for next bank holiday in " ++ division++"..."
     query conn "SELECT title,date,notes FROM events inner join divisions on events.fk_division == divisions.id WHERE division=? and date(events.date) > ? limit 1" [division::String, date::String]
 
--- | Fetches Bank holiday for the given year
+-- | Fetches Bank holiday for the given division and year
 queryBankHolidays :: Connection -> String -> String -> IO [Event]
 queryBankHolidays conn division year = do
     query conn "SELECT title,date,notes FROM events inner join divisions on events.fk_division == divisions.id WHERE division=? and strftime('%Y', events.date) = ?" [division::String, year::String]

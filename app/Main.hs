@@ -19,7 +19,6 @@ import Database.SQLite.Simple
 import System.IO
 import WebAPI
 
-
 -- | Downloads, Parses and Saves the data to the DB from Bank Holidays API
 downloadData :: Connection -> IO ()
 downloadData conn = do
@@ -35,6 +34,9 @@ downloadData conn = do
                     print "Saving Data to DB..."
                     saveRecords conn recs
                     print "Data saved to DB"
+                    print "Writing data to file"
+                    writeToFile recs
+                    print "Created bank_holidays.json successfully"
 
 
 -- | Fetches from DB and prints all the holidays for the current year for chosen division

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-comment">{-|
+Module      : WebAPI
+Description : API using Scooty
+License     : GPL-3
+-}</span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">WebAPI</span><span>
+</span><span id="line-10"></span><span>    </span><span class="hs-special">(</span><span> </span><span>
+</span><span id="line-11"></span><span>        </span><span class="annot"><a href="WebAPI.html#startAPI"><span class="hs-identifier">startAPI</span></a></span><span>
+</span><span id="line-12"></span><span>    </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Database.html"><span class="hs-identifier">Database</span></a></span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Web.Scotty</span></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Types.html"><span class="hs-identifier">Types</span></a></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Monad.IO.Class</span></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Fetch.html"><span class="hs-identifier">Fetch</span></a></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Parse.html"><span class="hs-identifier">Parse</span></a></span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span class="hs-comment">-- | starts scotty server in port 3000 for method 'GET' url '//holidays///:year//:division'</span><span>
+</span><span id="line-23"></span><span class="annot"><a href="WebAPI.html#startAPI"><span class="hs-identifier hs-type">startAPI</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-24"></span><span id="startAPI"><span class="annot"><span class="annottext">startAPI :: IO ()
+</span><a href="WebAPI.html#startAPI"><span class="hs-identifier hs-var hs-var">startAPI</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-25"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Starting Server...&quot;</span></span><span>
+</span><span id="line-26"></span><span>    </span><span id="local-6989586621679091636"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091636"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Connection
+</span><a href="Database.html#initialiseDB"><span class="hs-identifier hs-var">initialiseDB</span></a></span><span>
+</span><span id="line-27"></span><span>    </span><span class="annot"><span class="annottext">Port -&gt; ScottyM () -&gt; IO ()
+</span><span class="hs-identifier hs-var">scotty</span></span><span> </span><span class="annot"><span class="annottext">Port
+</span><span class="hs-number">3000</span></span><span> </span><span class="annot"><span class="annottext">(ScottyM () -&gt; IO ()) -&gt; ScottyM () -&gt; IO ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-28"></span><span>        </span><span class="annot"><span class="annottext">RoutePattern -&gt; ActionM () -&gt; ScottyM ()
+</span><span class="hs-identifier hs-var">get</span></span><span> </span><span class="annot"><span class="annottext">RoutePattern
+</span><span class="hs-string">&quot;/holidays/:year/:division&quot;</span></span><span> </span><span class="annot"><span class="annottext">(ActionM () -&gt; ScottyM ()) -&gt; ActionM () -&gt; ScottyM ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-29"></span><span>            </span><span id="local-6989586621679091632"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091632"><span class="hs-identifier hs-var">yy</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Text -&gt; ActionM String
+forall a. Parsable a =&gt; Text -&gt; ActionM a
+</span><span class="hs-identifier hs-var">param</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;year&quot;</span></span><span>
+</span><span id="line-30"></span><span>            </span><span id="local-6989586621679091630"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091630"><span class="hs-identifier hs-var">div</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Text -&gt; ActionM String
+forall a. Parsable a =&gt; Text -&gt; ActionM a
+</span><span class="hs-identifier hs-var">param</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;division&quot;</span></span><span>
+</span><span id="line-31"></span><span>            </span><span id="local-6989586621679091629"><span class="annot"><span class="annottext">[Event]
+</span><a href="#local-6989586621679091629"><span class="hs-identifier hs-var">holidays</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO [Event] -&gt; ActionT Text IO [Event]
+forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
+</span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO [Event] -&gt; ActionT Text IO [Event])
+-&gt; IO [Event] -&gt; ActionT Text IO [Event]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; String -&gt; IO [Event]
+</span><a href="Database.html#queryBankHolidays"><span class="hs-identifier hs-var">queryBankHolidays</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091636"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091630"><span class="hs-identifier hs-var">div</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091632"><span class="hs-identifier hs-var">yy</span></a></span><span>
+</span><span id="line-32"></span><span>            </span><span class="annot"><span class="annottext">[Event] -&gt; ActionM ()
+forall a. ToJSON a =&gt; a -&gt; ActionM ()
+</span><span class="hs-identifier hs-var">json</span></span><span> </span><span class="annot"><span class="annottext">[Event]
+</span><a href="#local-6989586621679091629"><span class="hs-identifier hs-var">holidays</span></a></span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span></pre></body></html>

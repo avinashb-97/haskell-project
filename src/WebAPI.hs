@@ -2,7 +2,7 @@
 
 {-|
 Module      : WebAPI
-Description : Get Request API using Scooty
+Description : API using Scooty
 License     : GPL-3
 -}
 
@@ -19,7 +19,7 @@ import Control.Monad.IO.Class
 import Fetch
 import Parse
 
--- | starts scotty server
+-- | starts scotty server in port 3000 for method 'GET' url '//holidays///:year//:division'
 startAPI :: IO()
 startAPI = do
     putStrLn "Starting Server..."

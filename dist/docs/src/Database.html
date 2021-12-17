@@ -11,51 +11,52 @@ License     : GPL-3
 </span><span id="line-11"></span><span>        </span><span class="annot"><a href="Database.html#saveRecords"><span class="hs-identifier">saveRecords</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-12"></span><span>        </span><span class="annot"><a href="Database.html#queryBankHolidaysForCurrentYear"><span class="hs-identifier">queryBankHolidaysForCurrentYear</span></a></span><span class="hs-special">,</span><span>
 </span><span id="line-13"></span><span>        </span><span class="annot"><a href="Database.html#queryBankHolidaysForGivenYear"><span class="hs-identifier">queryBankHolidaysForGivenYear</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-14"></span><span>        </span><span class="annot"><a href="Database.html#queryNextBankHoliday"><span class="hs-identifier">queryNextBankHoliday</span></a></span><span>
-</span><span id="line-15"></span><span>    </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-16"></span><span>
-</span><span id="line-17"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple</span></span><span>
-</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Applicative</span></span><span>
-</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.Internal</span></span><span>
-</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.FromRow</span></span><span>
-</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.ToRow</span></span><span>
-</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Types.html"><span class="hs-identifier">Types</span></a></span><span>
-</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">System.IO</span></span><span>
-</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Date.html"><span class="hs-identifier">Date</span></a></span><span>
-</span><span id="line-25"></span><span>
+</span><span id="line-14"></span><span>        </span><span class="annot"><a href="Database.html#queryNextBankHoliday"><span class="hs-identifier">queryNextBankHoliday</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-15"></span><span>        </span><span class="annot"><a href="Database.html#queryBankHolidays"><span class="hs-identifier">queryBankHolidays</span></a></span><span>
+</span><span id="line-16"></span><span>    </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-17"></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple</span></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Control.Applicative</span></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.Internal</span></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.FromRow</span></span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">Database.SQLite.Simple.ToRow</span></span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Types.html"><span class="hs-identifier">Types</span></a></span><span>
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><span class="hs-identifier">System.IO</span></span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span> </span><span class="annot"><a href="Date.html"><span class="hs-identifier">Date</span></a></span><span>
 </span><span id="line-26"></span><span>
-</span><span id="line-27"></span><span class="hs-comment">-- | Initialises the SQLite DB and creates table Divisions and Events if not exists</span><span>
-</span><span id="line-28"></span><span class="annot"><a href="Database.html#initialiseDB"><span class="hs-identifier hs-type">initialiseDB</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span>
-</span><span id="line-29"></span><span id="initialiseDB"><span class="annot"><span class="annottext">initialiseDB :: IO Connection
+</span><span id="line-27"></span><span>
+</span><span id="line-28"></span><span class="hs-comment">-- | Initialises the SQLite DB and creates table Divisions and Events if not exists</span><span>
+</span><span id="line-29"></span><span class="annot"><a href="Database.html#initialiseDB"><span class="hs-identifier hs-type">initialiseDB</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span>
+</span><span id="line-30"></span><span id="initialiseDB"><span class="annot"><span class="annottext">initialiseDB :: IO Connection
 </span><a href="Database.html#initialiseDB"><span class="hs-identifier hs-var hs-var">initialiseDB</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-30"></span><span>        </span><span id="local-6989586621679087282"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087282"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO Connection
+</span><span id="line-31"></span><span>        </span><span id="local-6989586621679091564"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091564"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO Connection
 </span><span class="hs-identifier hs-var">open</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;bankHolidays.sqlite&quot;</span></span><span>
-</span><span id="line-31"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; IO ()
+</span><span id="line-32"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; IO ()
 </span><span class="hs-identifier hs-var">execute_</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087282"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
+</span><a href="#local-6989586621679091564"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
 </span><span class="hs-string">&quot;CREATE TABLE IF NOT EXISTS divisions (\
             \id INTEGER PRIMARY KEY AUTOINCREMENT,\
             \division VARCHAR(225) NOT NULL \
             \)&quot;</span></span><span>
-</span><span id="line-35"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; IO ()
+</span><span id="line-36"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; IO ()
 </span><span class="hs-identifier hs-var">execute_</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087282"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
+</span><a href="#local-6989586621679091564"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
 </span><span class="hs-string">&quot;CREATE TABLE IF NOT EXISTS events (\
             \title VARCHAR(225) NOT NULL, \
             \date DATE NOT NULL, \
             \notes VARCHAR(225) DEFAULT NULL, \
             \fk_division INTEGER\
             \)&quot;</span></span><span>
-</span><span id="line-41"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; IO Connection
+</span><span id="line-42"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; IO Connection
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087282"><span class="hs-identifier hs-var">conn</span></a></span><span>
-</span><span id="line-42"></span><span>
+</span><a href="#local-6989586621679091564"><span class="hs-identifier hs-var">conn</span></a></span><span>
 </span><span id="line-43"></span><span>
-</span><span id="line-44"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-45"></span><span>    </span><span id="local-6989586621679087277"><span class="annot"><span class="annottext">fromRow :: RowParser DivisionEntry
+</span><span id="line-44"></span><span>
+</span><span id="line-45"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-46"></span><span>    </span><span id="local-6989586621679091559"><span class="annot"><span class="annottext">fromRow :: RowParser DivisionEntry
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; String -&gt; DivisionEntry
 </span><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-var">DivisionEntry</span></a></span><span> </span><span class="annot"><span class="annottext">(Int -&gt; String -&gt; DivisionEntry)
 -&gt; RowParser Int -&gt; RowParser (String -&gt; DivisionEntry)
@@ -68,10 +69,10 @@ forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">RowParser String
 forall a. FromField a =&gt; RowParser a
 </span><span class="hs-identifier hs-var">field</span></span><span>
-</span><span id="line-46"></span><span>    </span><span>
-</span><span id="line-47"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-48"></span><span>    </span><span id="local-6989586621679087271"><span class="annot"><span class="annottext">fromRow :: RowParser Event
-</span><a href="#local-6989586621679087271"><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String -&gt; Event
+</span><span id="line-47"></span><span>    </span><span>
+</span><span id="line-48"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FromRow</span></span><span> </span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-49"></span><span>    </span><span id="local-6989586621679091553"><span class="annot"><span class="annottext">fromRow :: RowParser Event
+</span><a href="#local-6989586621679091553"><span class="hs-identifier hs-var hs-var hs-var hs-var">fromRow</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String -&gt; Event
 </span><a href="Types.html#Event"><span class="hs-identifier hs-var">Event</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String -&gt; String -&gt; Event)
 -&gt; RowParser String -&gt; RowParser (String -&gt; String -&gt; Event)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -87,59 +88,59 @@ forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">RowParser String
 forall a. FromField a =&gt; RowParser a
 </span><span class="hs-identifier hs-var">field</span></span><span>
-</span><span id="line-49"></span><span>
-</span><span id="line-50"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-51"></span><span>    </span><span id="local-6989586621679087267"><span class="annot"><span class="annottext">toRow :: DivisionEntry -&gt; [SQLData]
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span> </span><span id="local-6989586621679087265"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087265"><span class="hs-identifier hs-var">id_</span></a></span></span><span> </span><span id="local-6989586621679087264"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087264"><span class="hs-identifier hs-var">division_</span></a></span></span><span class="hs-special">)</span><span>
-</span><span id="line-52"></span><span>        </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Int, String) -&gt; [SQLData]
+</span><span id="line-50"></span><span>
+</span><span id="line-51"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-52"></span><span>    </span><span id="local-6989586621679091549"><span class="annot"><span class="annottext">toRow :: DivisionEntry -&gt; [SQLData]
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span> </span><span id="local-6989586621679091547"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679091547"><span class="hs-identifier hs-var">id_</span></a></span></span><span> </span><span id="local-6989586621679091546"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091546"><span class="hs-identifier hs-var">division_</span></a></span></span><span class="hs-special">)</span><span>
+</span><span id="line-53"></span><span>        </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Int, String) -&gt; [SQLData]
 forall a. ToRow a =&gt; a -&gt; [SQLData]
 </span><span class="hs-identifier hs-var">toRow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087265"><span class="hs-identifier hs-var">id_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087264"><span class="hs-identifier hs-var">division_</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-53"></span><span>
-</span><span id="line-54"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#EventEntry"><span class="hs-identifier hs-type">EventEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-55"></span><span>    </span><span id="local-6989586621679087262"><span class="annot"><span class="annottext">toRow :: EventEntry -&gt; [SQLData]
-</span><a href="#local-6989586621679087262"><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#EventEntry"><span class="hs-identifier hs-type">EventEntry</span></a></span><span> </span><span id="local-6989586621679087260"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087260"><span class="hs-identifier hs-var">title_</span></a></span></span><span> </span><span id="local-6989586621679087259"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087259"><span class="hs-identifier hs-var">date_</span></a></span></span><span> </span><span id="local-6989586621679087258"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087258"><span class="hs-identifier hs-var">notes_</span></a></span></span><span> </span><span id="local-6989586621679087257"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087257"><span class="hs-identifier hs-var">fk_division</span></a></span></span><span class="hs-special">)</span><span>
-</span><span id="line-56"></span><span>        </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String, String, String, Int) -&gt; [SQLData]
+</span><a href="#local-6989586621679091547"><span class="hs-identifier hs-var">id_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091546"><span class="hs-identifier hs-var">division_</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-54"></span><span>
+</span><span id="line-55"></span><span class="hs-keyword">instance</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ToRow</span></span><span> </span><span class="annot"><a href="Types.html#EventEntry"><span class="hs-identifier hs-type">EventEntry</span></a></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-56"></span><span>    </span><span id="local-6989586621679091544"><span class="annot"><span class="annottext">toRow :: EventEntry -&gt; [SQLData]
+</span><a href="#local-6989586621679091544"><span class="hs-identifier hs-var hs-var hs-var hs-var">toRow</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Types.html#EventEntry"><span class="hs-identifier hs-type">EventEntry</span></a></span><span> </span><span id="local-6989586621679091542"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091542"><span class="hs-identifier hs-var">title_</span></a></span></span><span> </span><span id="local-6989586621679091541"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091541"><span class="hs-identifier hs-var">date_</span></a></span></span><span> </span><span id="local-6989586621679091540"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091540"><span class="hs-identifier hs-var">notes_</span></a></span></span><span> </span><span id="local-6989586621679091539"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679091539"><span class="hs-identifier hs-var">fk_division</span></a></span></span><span class="hs-special">)</span><span>
+</span><span id="line-57"></span><span>        </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(String, String, String, Int) -&gt; [SQLData]
 forall a. ToRow a =&gt; a -&gt; [SQLData]
 </span><span class="hs-identifier hs-var">toRow</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087260"><span class="hs-identifier hs-var">title_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087259"><span class="hs-identifier hs-var">date_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087258"><span class="hs-identifier hs-var">notes_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087257"><span class="hs-identifier hs-var">fk_division</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-57"></span><span>
-</span><span id="line-58"></span><span class="hs-comment">-- | Gets the division data if already present or creates and insert the given division</span><span>
-</span><span id="line-59"></span><span class="annot"><a href="Database.html#getOrCreateDivision"><span class="hs-identifier hs-type">getOrCreateDivision</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span>
-</span><span id="line-60"></span><span id="getOrCreateDivision"><span class="annot"><span class="annottext">getOrCreateDivision :: Connection -&gt; String -&gt; IO DivisionEntry
-</span><a href="Database.html#getOrCreateDivision"><span class="hs-identifier hs-var hs-var">getOrCreateDivision</span></a></span></span><span> </span><span id="local-6989586621679087255"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087255"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679087254"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087254"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-61"></span><span>    </span><span id="local-6989586621679087253"><span class="annot"><span class="annottext">[DivisionEntry]
-</span><a href="#local-6989586621679087253"><span class="hs-identifier hs-var">results</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; [NamedParam] -&gt; IO [DivisionEntry]
+</span><a href="#local-6989586621679091542"><span class="hs-identifier hs-var">title_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091541"><span class="hs-identifier hs-var">date_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091540"><span class="hs-identifier hs-var">notes_</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679091539"><span class="hs-identifier hs-var">fk_division</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-58"></span><span>
+</span><span id="line-59"></span><span class="hs-comment">-- | Gets the division data if already present or creates and insert the given division</span><span>
+</span><span id="line-60"></span><span class="annot"><a href="Database.html#getOrCreateDivision"><span class="hs-identifier hs-type">getOrCreateDivision</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><a href="Types.html#DivisionEntry"><span class="hs-identifier hs-type">DivisionEntry</span></a></span><span>
+</span><span id="line-61"></span><span id="getOrCreateDivision"><span class="annot"><span class="annottext">getOrCreateDivision :: Connection -&gt; String -&gt; IO DivisionEntry
+</span><a href="Database.html#getOrCreateDivision"><span class="hs-identifier hs-var hs-var">getOrCreateDivision</span></a></span></span><span> </span><span id="local-6989586621679091537"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091537"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679091536"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091536"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-62"></span><span>    </span><span id="local-6989586621679091535"><span class="annot"><span class="annottext">[DivisionEntry]
+</span><a href="#local-6989586621679091535"><span class="hs-identifier hs-var">results</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; [NamedParam] -&gt; IO [DivisionEntry]
 forall r.
 FromRow r =&gt;
 Connection -&gt; Query -&gt; [NamedParam] -&gt; IO [r]
 </span><span class="hs-identifier hs-var">queryNamed</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087255"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
+</span><a href="#local-6989586621679091537"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
 </span><span class="hs-string">&quot;SELECT * FROM divisions WHERE division=:division&quot;</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;:division&quot;</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; String -&gt; NamedParam
 forall v. ToField v =&gt; Text -&gt; v -&gt; NamedParam
 </span><span class="hs-operator hs-var">:=</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087254"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-special">]</span><span>    </span><span>
-</span><span id="line-62"></span><span>    </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">[DivisionEntry] -&gt; Int
+</span><a href="#local-6989586621679091536"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-special">]</span><span>    </span><span>
+</span><span id="line-63"></span><span>    </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">[DivisionEntry] -&gt; Int
 forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Int
 </span><span class="hs-identifier hs-var">length</span></span><span> </span><span class="annot"><span class="annottext">[DivisionEntry]
-</span><a href="#local-6989586621679087253"><span class="hs-identifier hs-var">results</span></a></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Bool
+</span><a href="#local-6989586621679091535"><span class="hs-identifier hs-var">results</span></a></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Bool
 forall a. Ord a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">&gt;</span></span><span> </span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">0</span></span><span> </span><span class="hs-keyword">then</span><span>
-</span><span id="line-63"></span><span>        </span><span class="annot"><span class="annottext">DivisionEntry -&gt; IO DivisionEntry
+</span><span id="line-64"></span><span>        </span><span class="annot"><span class="annottext">DivisionEntry -&gt; IO DivisionEntry
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(DivisionEntry -&gt; IO DivisionEntry)
 -&gt; ([DivisionEntry] -&gt; DivisionEntry)
@@ -152,277 +153,290 @@ forall a. [a] -&gt; a
 -&gt; [DivisionEntry] -&gt; IO DivisionEntry
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[DivisionEntry]
-</span><a href="#local-6989586621679087253"><span class="hs-identifier hs-var">results</span></a></span><span>
-</span><span id="line-64"></span><span>    </span><span class="hs-keyword">else</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-65"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; Only String -&gt; IO ()
+</span><a href="#local-6989586621679091535"><span class="hs-identifier hs-var">results</span></a></span><span>
+</span><span id="line-65"></span><span>    </span><span class="hs-keyword">else</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-66"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; Only String -&gt; IO ()
 forall q. ToRow q =&gt; Connection -&gt; Query -&gt; q -&gt; IO ()
 </span><span class="hs-identifier hs-var">execute</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087255"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
+</span><a href="#local-6989586621679091537"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
 </span><span class="hs-string">&quot;INSERT INTO divisions (division) VALUES (?)&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Only String
 forall a. a -&gt; Only a
 </span><span class="hs-identifier hs-var">Only</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087254"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-66"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO DivisionEntry
+</span><a href="#local-6989586621679091536"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-67"></span><span>        </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO DivisionEntry
 </span><a href="Database.html#getOrCreateDivision"><span class="hs-identifier hs-var">getOrCreateDivision</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087255"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087254"><span class="hs-identifier hs-var">division</span></a></span><span>
-</span><span id="line-67"></span><span>
-</span><span id="line-68"></span><span class="hs-comment">-- | Creates and insert a event entry in DB </span><span>
-</span><span id="line-69"></span><span class="annot"><a href="Database.html#createEvent"><span class="hs-identifier hs-type">createEvent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-70"></span><span id="createEvent"><span class="annot"><span class="annottext">createEvent :: Connection -&gt; String -&gt; Event -&gt; IO ()
-</span><a href="Database.html#createEvent"><span class="hs-identifier hs-var hs-var">createEvent</span></a></span></span><span> </span><span id="local-6989586621679087243"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087243"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679087242"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087242"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span id="local-6989586621679087241"><span class="annot"><span class="annottext">Event
-</span><a href="#local-6989586621679087241"><span class="hs-identifier hs-var">event</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-71"></span><span>    </span><span id="local-6989586621679087240"><span class="annot"><span class="annottext">DivisionEntry
-</span><a href="#local-6989586621679087240"><span class="hs-identifier hs-var">divisionData</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO DivisionEntry
+</span><a href="#local-6989586621679091537"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091536"><span class="hs-identifier hs-var">division</span></a></span><span>
+</span><span id="line-68"></span><span>
+</span><span id="line-69"></span><span class="hs-comment">-- | Creates and insert a event entry in DB </span><span>
+</span><span id="line-70"></span><span class="annot"><a href="Database.html#createEvent"><span class="hs-identifier hs-type">createEvent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-71"></span><span id="createEvent"><span class="annot"><span class="annottext">createEvent :: Connection -&gt; String -&gt; Event -&gt; IO ()
+</span><a href="Database.html#createEvent"><span class="hs-identifier hs-var hs-var">createEvent</span></a></span></span><span> </span><span id="local-6989586621679091525"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091525"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679091524"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091524"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span id="local-6989586621679091523"><span class="annot"><span class="annottext">Event
+</span><a href="#local-6989586621679091523"><span class="hs-identifier hs-var">event</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-72"></span><span>    </span><span id="local-6989586621679091522"><span class="annot"><span class="annottext">DivisionEntry
+</span><a href="#local-6989586621679091522"><span class="hs-identifier hs-var">divisionData</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO DivisionEntry
 </span><a href="Database.html#getOrCreateDivision"><span class="hs-identifier hs-var">getOrCreateDivision</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087243"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087242"><span class="hs-identifier hs-var">division</span></a></span><span>
-</span><span id="line-72"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679087239"><span class="annot"><span class="annottext">entry :: EventEntry
-</span><a href="#local-6989586621679087239"><span class="hs-identifier hs-var hs-var">entry</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">EventEntry :: String -&gt; String -&gt; String -&gt; Int -&gt; EventEntry
+</span><a href="#local-6989586621679091525"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091524"><span class="hs-identifier hs-var">division</span></a></span><span>
+</span><span id="line-73"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679091521"><span class="annot"><span class="annottext">entry :: EventEntry
+</span><a href="#local-6989586621679091521"><span class="hs-identifier hs-var hs-var">entry</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">EventEntry :: String -&gt; String -&gt; String -&gt; Int -&gt; EventEntry
 </span><a href="Types.html#EventEntry"><span class="hs-identifier hs-type">EventEntry</span></a></span><span> </span><span class="hs-special">{</span><span>
-</span><span id="line-73"></span><span>        </span><span class="annot"><span class="annottext">title_ :: String
+</span><span id="line-74"></span><span>        </span><span class="annot"><span class="annottext">title_ :: String
 </span><a href="Types.html#title_"><span class="hs-identifier hs-var">title_</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Event -&gt; String
 </span><a href="Types.html#title"><span class="hs-identifier hs-var hs-var">title</span></a></span><span> </span><span class="annot"><span class="annottext">Event
-</span><a href="#local-6989586621679087241"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-74"></span><span>        </span><span class="annot"><span class="annottext">date_ :: String
+</span><a href="#local-6989586621679091523"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-75"></span><span>        </span><span class="annot"><span class="annottext">date_ :: String
 </span><a href="Types.html#date_"><span class="hs-identifier hs-var">date_</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Event -&gt; String
 </span><a href="Types.html#date"><span class="hs-identifier hs-var hs-var">date</span></a></span><span> </span><span class="annot"><span class="annottext">Event
-</span><a href="#local-6989586621679087241"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-75"></span><span>        </span><span class="annot"><span class="annottext">notes_ :: String
+</span><a href="#local-6989586621679091523"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-76"></span><span>        </span><span class="annot"><span class="annottext">notes_ :: String
 </span><a href="Types.html#notes_"><span class="hs-identifier hs-var">notes_</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Event -&gt; String
 </span><a href="Types.html#notes"><span class="hs-identifier hs-var hs-var">notes</span></a></span><span> </span><span class="annot"><span class="annottext">Event
-</span><a href="#local-6989586621679087241"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-76"></span><span>        </span><span class="annot"><span class="annottext">fk_division :: Int
+</span><a href="#local-6989586621679091523"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-77"></span><span>        </span><span class="annot"><span class="annottext">fk_division :: Int
 </span><a href="Types.html#fk_division"><span class="hs-identifier hs-var">fk_division</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">DivisionEntry -&gt; Int
 </span><a href="Types.html#id_"><span class="hs-identifier hs-var hs-var">id_</span></a></span><span> </span><span class="annot"><span class="annottext">DivisionEntry
-</span><a href="#local-6989586621679087240"><span class="hs-identifier hs-var">divisionData</span></a></span><span>
-</span><span id="line-77"></span><span>    </span><span class="hs-special">}</span><span>
-</span><span id="line-78"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; EventEntry -&gt; IO ()
+</span><a href="#local-6989586621679091522"><span class="hs-identifier hs-var">divisionData</span></a></span><span>
+</span><span id="line-78"></span><span>    </span><span class="hs-special">}</span><span>
+</span><span id="line-79"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; EventEntry -&gt; IO ()
 forall q. ToRow q =&gt; Connection -&gt; Query -&gt; q -&gt; IO ()
 </span><span class="hs-identifier hs-var">execute</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087243"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
+</span><a href="#local-6989586621679091525"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
 </span><span class="hs-string">&quot;INSERT INTO events VALUES (?,?,?,?)&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">EventEntry
-</span><a href="#local-6989586621679087239"><span class="hs-identifier hs-var">entry</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-79"></span><span>
-</span><span id="line-80"></span><span class="hs-comment">-- | Saves data of all event in a division given division name and list of event</span><span>
-</span><span id="line-81"></span><span class="annot"><a href="Database.html#saveEvent"><span class="hs-identifier hs-type">saveEvent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-82"></span><span id="saveEvent"><span class="annot"><span class="annottext">saveEvent :: Connection -&gt; String -&gt; [Event] -&gt; IO ()
-</span><a href="Database.html#saveEvent"><span class="hs-identifier hs-var hs-var">saveEvent</span></a></span></span><span> </span><span id="local-6989586621679087229"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087229"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679087228"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087228"><span class="hs-identifier hs-var">div</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Event -&gt; IO ()) -&gt; [Event] -&gt; IO ()
+</span><a href="#local-6989586621679091521"><span class="hs-identifier hs-var">entry</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-80"></span><span>
+</span><span id="line-81"></span><span class="hs-comment">-- | Saves data of all event in a division given division name and list of event</span><span>
+</span><span id="line-82"></span><span class="annot"><a href="Database.html#saveEvent"><span class="hs-identifier hs-type">saveEvent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-83"></span><span id="saveEvent"><span class="annot"><span class="annottext">saveEvent :: Connection -&gt; String -&gt; [Event] -&gt; IO ()
+</span><a href="Database.html#saveEvent"><span class="hs-identifier hs-var hs-var">saveEvent</span></a></span></span><span> </span><span id="local-6989586621679091511"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091511"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679091510"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091510"><span class="hs-identifier hs-var">div</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Event -&gt; IO ()) -&gt; [Event] -&gt; IO ()
 forall (t :: * -&gt; *) (m :: * -&gt; *) a b.
 (Foldable t, Monad m) =&gt;
 (a -&gt; m b) -&gt; t a -&gt; m ()
 </span><span class="hs-identifier hs-var">mapM_</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; Event -&gt; IO ()
 </span><a href="Database.html#createEvent"><span class="hs-identifier hs-var">createEvent</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087229"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087228"><span class="hs-identifier hs-var">div</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-83"></span><span>
-</span><span id="line-84"></span><span class="hs-comment">-- | Saves data of all the events in a division</span><span>
-</span><span id="line-85"></span><span class="annot"><a href="Database.html#saveRecord"><span class="hs-identifier hs-type">saveRecord</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-type">Events</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-86"></span><span id="saveRecord"><span class="annot"><span class="annottext">saveRecord :: Connection -&gt; Events -&gt; IO ()
-</span><a href="Database.html#saveRecord"><span class="hs-identifier hs-var hs-var">saveRecord</span></a></span></span><span> </span><span id="local-6989586621679087225"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087225"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679087224"><span class="annot"><span class="annottext">Events
-</span><a href="#local-6989586621679087224"><span class="hs-identifier hs-var">event</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; [Event] -&gt; IO ()
+</span><a href="#local-6989586621679091511"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091510"><span class="hs-identifier hs-var">div</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-84"></span><span>
+</span><span id="line-85"></span><span class="hs-comment">-- | Saves data of all the events in a division</span><span>
+</span><span id="line-86"></span><span class="annot"><a href="Database.html#saveRecord"><span class="hs-identifier hs-type">saveRecord</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Types.html#Events"><span class="hs-identifier hs-type">Events</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-87"></span><span id="saveRecord"><span class="annot"><span class="annottext">saveRecord :: Connection -&gt; Events -&gt; IO ()
+</span><a href="Database.html#saveRecord"><span class="hs-identifier hs-var hs-var">saveRecord</span></a></span></span><span> </span><span id="local-6989586621679091507"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091507"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679091506"><span class="annot"><span class="annottext">Events
+</span><a href="#local-6989586621679091506"><span class="hs-identifier hs-var">event</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; [Event] -&gt; IO ()
 </span><a href="Database.html#saveEvent"><span class="hs-identifier hs-var">saveEvent</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087225"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Events -&gt; String
+</span><a href="#local-6989586621679091507"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Events -&gt; String
 </span><a href="Types.html#division"><span class="hs-identifier hs-var hs-var">division</span></a></span><span> </span><span class="annot"><span class="annottext">Events
-</span><a href="#local-6989586621679087224"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Events -&gt; [Event]
+</span><a href="#local-6989586621679091506"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Events -&gt; [Event]
 </span><a href="Types.html#events"><span class="hs-identifier hs-var hs-var">events</span></a></span><span> </span><span class="annot"><span class="annottext">Events
-</span><a href="#local-6989586621679087224"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-87"></span><span>
-</span><span id="line-88"></span><span class="hs-comment">-- | Saves all the bank holiday data to the DB with given connection</span><span>
-</span><span id="line-89"></span><span class="annot"><a href="Database.html#saveRecords"><span class="hs-identifier hs-type">saveRecords</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-90"></span><span id="saveRecords"><span class="annot"><span class="annottext">saveRecords :: Connection -&gt; Record -&gt; IO ()
-</span><a href="Database.html#saveRecords"><span class="hs-identifier hs-var hs-var">saveRecords</span></a></span></span><span> </span><span id="local-6989586621679087221"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087221"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679087220"><span class="annot"><span class="annottext">Record
-</span><a href="#local-6989586621679087220"><span class="hs-identifier hs-var">record</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-91"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Events -&gt; IO ()
-</span><a href="Database.html#saveRecord"><span class="hs-identifier hs-var">saveRecord</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087221"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Record -&gt; Events
-</span><a href="Types.html#england_and_wales"><span class="hs-identifier hs-var hs-var">england_and_wales</span></a></span><span> </span><span class="annot"><span class="annottext">Record
-</span><a href="#local-6989586621679087220"><span class="hs-identifier hs-var">record</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679091506"><span class="hs-identifier hs-var">event</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-88"></span><span>
+</span><span id="line-89"></span><span class="hs-comment">-- | Saves all the bank holiday data to the DB with given connection</span><span>
+</span><span id="line-90"></span><span class="annot"><a href="Database.html#saveRecords"><span class="hs-identifier hs-type">saveRecords</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Types.html#Record"><span class="hs-identifier hs-type">Record</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-91"></span><span id="saveRecords"><span class="annot"><span class="annottext">saveRecords :: Connection -&gt; Record -&gt; IO ()
+</span><a href="Database.html#saveRecords"><span class="hs-identifier hs-var hs-var">saveRecords</span></a></span></span><span> </span><span id="local-6989586621679091503"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091503"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679091502"><span class="annot"><span class="annottext">Record
+</span><a href="#local-6989586621679091502"><span class="hs-identifier hs-var">record</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-92"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Events -&gt; IO ()
 </span><a href="Database.html#saveRecord"><span class="hs-identifier hs-var">saveRecord</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087221"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Record -&gt; Events
-</span><a href="Types.html#scotland"><span class="hs-identifier hs-var hs-var">scotland</span></a></span><span> </span><span class="annot"><span class="annottext">Record
-</span><a href="#local-6989586621679087220"><span class="hs-identifier hs-var">record</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679091503"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Record -&gt; Events
+</span><a href="Types.html#england_and_wales"><span class="hs-identifier hs-var hs-var">england_and_wales</span></a></span><span> </span><span class="annot"><span class="annottext">Record
+</span><a href="#local-6989586621679091502"><span class="hs-identifier hs-var">record</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-93"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Events -&gt; IO ()
 </span><a href="Database.html#saveRecord"><span class="hs-identifier hs-var">saveRecord</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087221"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Record -&gt; Events
+</span><a href="#local-6989586621679091503"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Record -&gt; Events
+</span><a href="Types.html#scotland"><span class="hs-identifier hs-var hs-var">scotland</span></a></span><span> </span><span class="annot"><span class="annottext">Record
+</span><a href="#local-6989586621679091502"><span class="hs-identifier hs-var">record</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-94"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Events -&gt; IO ()
+</span><a href="Database.html#saveRecord"><span class="hs-identifier hs-var">saveRecord</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091503"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Record -&gt; Events
 </span><a href="Types.html#northern_ireland"><span class="hs-identifier hs-var hs-var">northern_ireland</span></a></span><span> </span><span class="annot"><span class="annottext">Record
-</span><a href="#local-6989586621679087220"><span class="hs-identifier hs-var">record</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-94"></span><span>
-</span><span id="line-95"></span><span class="hs-comment">-- | Gets the required division from user</span><span>
-</span><span id="line-96"></span><span class="annot"><a href="Database.html#getDivisonFromUser"><span class="hs-identifier hs-type">getDivisonFromUser</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-97"></span><span id="getDivisonFromUser"><span class="annot"><span class="annottext">getDivisonFromUser :: IO String
+</span><a href="#local-6989586621679091502"><span class="hs-identifier hs-var">record</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-95"></span><span>
+</span><span id="line-96"></span><span class="hs-comment">-- | Gets the input from user for choosing a division</span><span>
+</span><span id="line-97"></span><span class="annot"><a href="Database.html#getDivisonFromUser"><span class="hs-identifier hs-type">getDivisonFromUser</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-98"></span><span id="getDivisonFromUser"><span class="annot"><span class="annottext">getDivisonFromUser :: IO String
 </span><a href="Database.html#getDivisonFromUser"><span class="hs-identifier hs-var hs-var">getDivisonFromUser</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-98"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
-</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;----------------------&quot;</span></span><span>
 </span><span id="line-99"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;Choose a division     &quot;</span></span><span>
+</span><span class="hs-string">&quot;----------------------&quot;</span></span><span>
 </span><span id="line-100"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;1. England and Wales  &quot;</span></span><span>
+</span><span class="hs-string">&quot;Choose a division     &quot;</span></span><span>
 </span><span id="line-101"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;2. Scotland           &quot;</span></span><span>
+</span><span class="hs-string">&quot;1. England and Wales  &quot;</span></span><span>
 </span><span id="line-102"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;3. Northern Ireland   &quot;</span></span><span>
+</span><span class="hs-string">&quot;2. Scotland           &quot;</span></span><span>
 </span><span id="line-103"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;3. Northern Ireland   &quot;</span></span><span>
+</span><span id="line-104"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;----------------------&quot;</span></span><span>
-</span><span id="line-104"></span><span>    </span><span class="annot"><span class="annottext">Handle -&gt; BufferMode -&gt; IO ()
+</span><span id="line-105"></span><span>    </span><span class="annot"><span class="annottext">Handle -&gt; BufferMode -&gt; IO ()
 </span><span class="hs-identifier hs-var">hSetBuffering</span></span><span> </span><span class="annot"><span class="annottext">Handle
 </span><span class="hs-identifier hs-var">stdout</span></span><span> </span><span class="annot"><span class="annottext">BufferMode
 </span><span class="hs-identifier hs-var">NoBuffering</span></span><span>
-</span><span id="line-105"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span id="line-106"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStr</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Option &gt; &quot;</span></span><span>
-</span><span id="line-106"></span><span>    </span><span id="local-6989586621679087210"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087210"><span class="hs-identifier hs-var">option</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Int
+</span><span id="line-107"></span><span>    </span><span id="local-6989586621679091492"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679091492"><span class="hs-identifier hs-var">option</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Int
 forall a. Read a =&gt; IO a
 </span><span class="hs-identifier hs-var">readLn</span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
-</span><span id="line-107"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679087208"><span class="annot"><span class="annottext">divisions :: [String]
-</span><a href="#local-6989586621679087208"><span class="hs-identifier hs-var hs-var">divisions</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
+</span><span id="line-108"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679091490"><span class="annot"><span class="annottext">divisions :: [String]
+</span><a href="#local-6989586621679091490"><span class="hs-identifier hs-var hs-var">divisions</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;england-and-wales&quot;</span></span><span class="hs-special">,</span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;scotland&quot;</span></span><span class="hs-special">,</span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;northern-ireland&quot;</span></span><span class="hs-special">]</span><span>  </span><span>
-</span><span id="line-108"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679087207"><span class="annot"><span class="annottext">division :: String
-</span><a href="#local-6989586621679087207"><span class="hs-identifier hs-var hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087210"><span class="hs-identifier hs-var">option</span></a></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Bool
+</span><span id="line-109"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679091489"><span class="annot"><span class="annottext">division :: String
+</span><a href="#local-6989586621679091489"><span class="hs-identifier hs-var hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">if</span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679091492"><span class="hs-identifier hs-var">option</span></a></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Bool
 forall a. Ord a =&gt; a -&gt; a -&gt; Bool
 </span><span class="hs-operator hs-var">&lt;=</span></span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">3</span></span><span>  </span><span class="hs-keyword">then</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[String]
-</span><a href="#local-6989586621679087208"><span class="hs-identifier hs-var">divisions</span></a></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Int -&gt; String
+</span><a href="#local-6989586621679091490"><span class="hs-identifier hs-var">divisions</span></a></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Int -&gt; String
 forall a. [a] -&gt; Int -&gt; a
 </span><span class="hs-operator hs-var">!!</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087210"><span class="hs-identifier hs-var">option</span></a></span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
+</span><a href="#local-6989586621679091492"><span class="hs-identifier hs-var">option</span></a></span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
 forall a. Num a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-glyph hs-var">-</span></span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-keyword">else</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;&quot;</span></span><span> </span><span>
-</span><span id="line-109"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO String
+</span><span id="line-110"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO String
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO String) -&gt; String -&gt; IO String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String]
-</span><a href="#local-6989586621679087208"><span class="hs-identifier hs-var">divisions</span></a></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Int -&gt; String
+</span><a href="#local-6989586621679091490"><span class="hs-identifier hs-var">divisions</span></a></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Int -&gt; String
 forall a. [a] -&gt; Int -&gt; a
 </span><span class="hs-operator hs-var">!!</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679087210"><span class="hs-identifier hs-var">option</span></a></span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
+</span><a href="#local-6989586621679091492"><span class="hs-identifier hs-var">option</span></a></span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
 forall a. Num a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-glyph hs-var">-</span></span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">1</span></span><span class="hs-special">)</span><span>
-</span><span id="line-110"></span><span>
-</span><span id="line-111"></span><span class="hs-comment">-- | Gets all the bank holidays in a division in current year</span><span>
-</span><span id="line-112"></span><span class="annot"><a href="Database.html#queryBankHolidaysForCurrentYear"><span class="hs-identifier hs-type">queryBankHolidaysForCurrentYear</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-113"></span><span id="queryBankHolidaysForCurrentYear"><span class="annot"><span class="annottext">queryBankHolidaysForCurrentYear :: Connection -&gt; IO [Event]
-</span><a href="Database.html#queryBankHolidaysForCurrentYear"><span class="hs-identifier hs-var hs-var">queryBankHolidaysForCurrentYear</span></a></span></span><span> </span><span id="local-6989586621679087204"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087204"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-114"></span><span>    </span><span id="local-6989586621679087203"><span class="annot"><span class="annottext">Integer
-</span><a href="#local-6989586621679087203"><span class="hs-identifier hs-var">yy</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Integer
+</span><span id="line-111"></span><span>
+</span><span id="line-112"></span><span class="hs-comment">-- | Gets all the bank holidays in a division in current year</span><span>
+</span><span id="line-113"></span><span class="annot"><a href="Database.html#queryBankHolidaysForCurrentYear"><span class="hs-identifier hs-type">queryBankHolidaysForCurrentYear</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-114"></span><span id="queryBankHolidaysForCurrentYear"><span class="annot"><span class="annottext">queryBankHolidaysForCurrentYear :: Connection -&gt; IO [Event]
+</span><a href="Database.html#queryBankHolidaysForCurrentYear"><span class="hs-identifier hs-var hs-var">queryBankHolidaysForCurrentYear</span></a></span></span><span> </span><span id="local-6989586621679091486"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091486"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-115"></span><span>    </span><span id="local-6989586621679091485"><span class="annot"><span class="annottext">Integer
+</span><a href="#local-6989586621679091485"><span class="hs-identifier hs-var">yy</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO Integer
 </span><a href="Date.html#getCurrentYear"><span class="hs-identifier hs-var">getCurrentYear</span></a></span><span> </span><span>
-</span><span id="line-115"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679087201"><span class="annot"><span class="annottext">year :: String
-</span><a href="#local-6989586621679087201"><span class="hs-identifier hs-var hs-var">year</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Integer -&gt; String
+</span><span id="line-116"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679091483"><span class="annot"><span class="annottext">year :: String
+</span><a href="#local-6989586621679091483"><span class="hs-identifier hs-var hs-var">year</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Integer -&gt; String
 forall a. Show a =&gt; a -&gt; String
 </span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Integer
-</span><a href="#local-6989586621679087203"><span class="hs-identifier hs-var">yy</span></a></span><span>
-</span><span id="line-116"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO [Event]
+</span><a href="#local-6989586621679091485"><span class="hs-identifier hs-var">yy</span></a></span><span>
+</span><span id="line-117"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO [Event]
 </span><a href="Database.html#queryBankHolidaysWithYear"><span class="hs-identifier hs-var">queryBankHolidaysWithYear</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087204"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087201"><span class="hs-identifier hs-var">year</span></a></span><span>
-</span><span id="line-117"></span><span>
-</span><span id="line-118"></span><span class="hs-comment">-- | Fetches data of all the bank holidays in a chosen division for a given year</span><span>
-</span><span id="line-119"></span><span class="annot"><a href="Database.html#queryBankHolidaysForGivenYear"><span class="hs-identifier hs-type">queryBankHolidaysForGivenYear</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-120"></span><span id="queryBankHolidaysForGivenYear"><span class="annot"><span class="annottext">queryBankHolidaysForGivenYear :: Connection -&gt; IO [Event]
-</span><a href="Database.html#queryBankHolidaysForGivenYear"><span class="hs-identifier hs-var hs-var">queryBankHolidaysForGivenYear</span></a></span></span><span> </span><span id="local-6989586621679087198"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087198"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-121"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><a href="#local-6989586621679091486"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091483"><span class="hs-identifier hs-var">year</span></a></span><span>
+</span><span id="line-118"></span><span>
+</span><span id="line-119"></span><span class="hs-comment">-- | Gets Input from user and Fetches data of all the bank holidays in a chosen division for a given year</span><span>
+</span><span id="line-120"></span><span class="annot"><a href="Database.html#queryBankHolidaysForGivenYear"><span class="hs-identifier hs-type">queryBankHolidaysForGivenYear</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-121"></span><span id="queryBankHolidaysForGivenYear"><span class="annot"><span class="annottext">queryBankHolidaysForGivenYear :: Connection -&gt; IO [Event]
+</span><a href="Database.html#queryBankHolidaysForGivenYear"><span class="hs-identifier hs-var hs-var">queryBankHolidaysForGivenYear</span></a></span></span><span> </span><span id="local-6989586621679091480"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091480"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-122"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Enter a year between 2017 and 2023 : &quot;</span></span><span>
-</span><span id="line-122"></span><span>    </span><span class="annot"><span class="annottext">Handle -&gt; BufferMode -&gt; IO ()
+</span><span id="line-123"></span><span>    </span><span class="annot"><span class="annottext">Handle -&gt; BufferMode -&gt; IO ()
 </span><span class="hs-identifier hs-var">hSetBuffering</span></span><span> </span><span class="annot"><span class="annottext">Handle
 </span><span class="hs-identifier hs-var">stdout</span></span><span> </span><span class="annot"><span class="annottext">BufferMode
 </span><span class="hs-identifier hs-var">NoBuffering</span></span><span>
-</span><span id="line-123"></span><span>    </span><span id="local-6989586621679087197"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087197"><span class="hs-identifier hs-var">option</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
+</span><span id="line-124"></span><span>    </span><span id="local-6989586621679091479"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091479"><span class="hs-identifier hs-var">option</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
 </span><span class="hs-identifier hs-var">getLine</span></span><span>
-</span><span id="line-124"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO [Event]
+</span><span id="line-125"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; IO [Event]
 </span><a href="Database.html#queryBankHolidaysWithYear"><span class="hs-identifier hs-var">queryBankHolidaysWithYear</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087198"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087197"><span class="hs-identifier hs-var">option</span></a></span><span>
-</span><span id="line-125"></span><span>
-</span><span id="line-126"></span><span class="hs-comment">-- | Fetches data of all the bank holidays in a chosen division for a given year</span><span>
-</span><span id="line-127"></span><span class="annot"><a href="Database.html#queryBankHolidaysWithYear"><span class="hs-identifier hs-type">queryBankHolidaysWithYear</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-128"></span><span id="queryBankHolidaysWithYear"><span class="annot"><span class="annottext">queryBankHolidaysWithYear :: Connection -&gt; String -&gt; IO [Event]
-</span><a href="Database.html#queryBankHolidaysWithYear"><span class="hs-identifier hs-var hs-var">queryBankHolidaysWithYear</span></a></span></span><span> </span><span id="local-6989586621679087195"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087195"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679087194"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087194"><span class="hs-identifier hs-var">year</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-129"></span><span>    </span><span id="local-6989586621679087193"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087193"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
+</span><a href="#local-6989586621679091480"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091479"><span class="hs-identifier hs-var">option</span></a></span><span>
+</span><span id="line-126"></span><span>
+</span><span id="line-127"></span><span class="hs-comment">-- | Gets Input from user and Fetches data of all the bank holidays in a chosen division for a given year</span><span>
+</span><span id="line-128"></span><span class="annot"><a href="Database.html#queryBankHolidaysWithYear"><span class="hs-identifier hs-type">queryBankHolidaysWithYear</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-129"></span><span id="queryBankHolidaysWithYear"><span class="annot"><span class="annottext">queryBankHolidaysWithYear :: Connection -&gt; String -&gt; IO [Event]
+</span><a href="Database.html#queryBankHolidaysWithYear"><span class="hs-identifier hs-var hs-var">queryBankHolidaysWithYear</span></a></span></span><span> </span><span id="local-6989586621679091477"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091477"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679091476"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091476"><span class="hs-identifier hs-var">year</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-130"></span><span>    </span><span id="local-6989586621679091475"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091475"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
 </span><a href="Database.html#getDivisonFromUser"><span class="hs-identifier hs-var">getDivisonFromUser</span></a></span><span>
-</span><span id="line-130"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span id="line-131"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Looking for bank holidays in &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087193"><span class="hs-identifier hs-var">division</span></a></span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679091475"><span class="hs-identifier hs-var">division</span></a></span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot; for the year &quot;</span></span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087194"><span class="hs-identifier hs-var">year</span></a></span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679091476"><span class="hs-identifier hs-var">year</span></a></span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;...&quot;</span></span><span>
-</span><span id="line-131"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; [String] -&gt; IO [Event]
-forall q r.
-(ToRow q, FromRow r) =&gt;
-Connection -&gt; Query -&gt; q -&gt; IO [r]
-</span><span class="hs-identifier hs-var">query</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087195"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
-</span><span class="hs-string">&quot;SELECT title,date,notes FROM events inner join divisions on events.fk_division == divisions.id WHERE division=? and strftime('%Y', events.date) = ?&quot;</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087193"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087194"><span class="hs-identifier hs-var">year</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
-</span><span id="line-132"></span><span>
-</span><span id="line-133"></span><span class="hs-comment">-- | Fetches data from DB for the next Bank Holiday</span><span>
-</span><span id="line-134"></span><span class="annot"><a href="Database.html#queryNextBankHoliday"><span class="hs-identifier hs-type">queryNextBankHoliday</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-135"></span><span id="queryNextBankHoliday"><span class="annot"><span class="annottext">queryNextBankHoliday :: Connection -&gt; IO [Event]
-</span><a href="Database.html#queryNextBankHoliday"><span class="hs-identifier hs-var hs-var">queryNextBankHoliday</span></a></span></span><span> </span><span id="local-6989586621679087191"><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087191"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-136"></span><span>    </span><span id="local-6989586621679087190"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087190"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
+</span><span id="line-132"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; String -&gt; String -&gt; IO [Event]
+</span><a href="Database.html#queryBankHolidays"><span class="hs-identifier hs-var">queryBankHolidays</span></a></span><span> </span><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091477"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091475"><span class="hs-identifier hs-var">division</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091476"><span class="hs-identifier hs-var">year</span></a></span><span>
+</span><span id="line-133"></span><span>
+</span><span id="line-134"></span><span class="hs-comment">-- | Gets Input from user and Fetches data from DB for the next Bank Holiday</span><span>
+</span><span id="line-135"></span><span class="annot"><a href="Database.html#queryNextBankHoliday"><span class="hs-identifier hs-type">queryNextBankHoliday</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-136"></span><span id="queryNextBankHoliday"><span class="annot"><span class="annottext">queryNextBankHoliday :: Connection -&gt; IO [Event]
+</span><a href="Database.html#queryNextBankHoliday"><span class="hs-identifier hs-var hs-var">queryNextBankHoliday</span></a></span></span><span> </span><span id="local-6989586621679091474"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091474"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-137"></span><span>    </span><span id="local-6989586621679091473"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091473"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
 </span><a href="Database.html#getDivisonFromUser"><span class="hs-identifier hs-var">getDivisonFromUser</span></a></span><span>
-</span><span id="line-137"></span><span>    </span><span id="local-6989586621679087189"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087189"><span class="hs-identifier hs-var">date</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
+</span><span id="line-138"></span><span>    </span><span id="local-6989586621679091472"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091472"><span class="hs-identifier hs-var">date</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">IO String
 </span><a href="Date.html#getCurrentDate"><span class="hs-identifier hs-var">getCurrentDate</span></a></span><span>
-</span><span id="line-138"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
+</span><span id="line-139"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">putStrLn</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO ()) -&gt; String -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Looking for next bank holiday in &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087190"><span class="hs-identifier hs-var">division</span></a></span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679091473"><span class="hs-identifier hs-var">division</span></a></span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;...&quot;</span></span><span>
-</span><span id="line-139"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; [String] -&gt; IO [Event]
+</span><span id="line-140"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; [String] -&gt; IO [Event]
 forall q r.
 (ToRow q, FromRow r) =&gt;
 Connection -&gt; Query -&gt; q -&gt; IO [r]
 </span><span class="hs-identifier hs-var">query</span></span><span> </span><span class="annot"><span class="annottext">Connection
-</span><a href="#local-6989586621679087191"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
+</span><a href="#local-6989586621679091474"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
 </span><span class="hs-string">&quot;SELECT title,date,notes FROM events inner join divisions on events.fk_division == divisions.id WHERE division=? and date(events.date) &gt; ? limit 1&quot;</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087190"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679087189"><span class="hs-identifier hs-var">date</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
-</span><span id="line-140"></span></pre></body></html>
+</span><a href="#local-6989586621679091473"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091472"><span class="hs-identifier hs-var">date</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-141"></span><span>
+</span><span id="line-142"></span><span class="hs-comment">-- | Fetches Bank holiday for the given division and year</span><span>
+</span><span id="line-143"></span><span class="annot"><a href="Database.html#queryBankHolidays"><span class="hs-identifier hs-type">queryBankHolidays</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Connection</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Types.html#Event"><span class="hs-identifier hs-type">Event</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-144"></span><span id="queryBankHolidays"><span class="annot"><span class="annottext">queryBankHolidays :: Connection -&gt; String -&gt; String -&gt; IO [Event]
+</span><a href="Database.html#queryBankHolidays"><span class="hs-identifier hs-var hs-var">queryBankHolidays</span></a></span></span><span> </span><span id="local-6989586621679091469"><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091469"><span class="hs-identifier hs-var">conn</span></a></span></span><span> </span><span id="local-6989586621679091468"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091468"><span class="hs-identifier hs-var">division</span></a></span></span><span> </span><span id="local-6989586621679091467"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091467"><span class="hs-identifier hs-var">year</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-145"></span><span>    </span><span class="annot"><span class="annottext">Connection -&gt; Query -&gt; [String] -&gt; IO [Event]
+forall q r.
+(ToRow q, FromRow r) =&gt;
+Connection -&gt; Query -&gt; q -&gt; IO [r]
+</span><span class="hs-identifier hs-var">query</span></span><span> </span><span class="annot"><span class="annottext">Connection
+</span><a href="#local-6989586621679091469"><span class="hs-identifier hs-var">conn</span></a></span><span> </span><span class="annot"><span class="annottext">Query
+</span><span class="hs-string">&quot;SELECT title,date,notes FROM events inner join divisions on events.fk_division == divisions.id WHERE division=? and strftime('%Y', events.date) = ?&quot;</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091468"><span class="hs-identifier hs-var">division</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679091467"><span class="hs-identifier hs-var">year</span></a></span><span class="hs-glyph">::</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-146"></span></pre></body></html>
