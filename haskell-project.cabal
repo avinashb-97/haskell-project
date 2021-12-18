@@ -42,7 +42,6 @@ library
     , http-conduit
     , scotty
     , sqlite-simple
-    , text
     , time
     , unicode-show
     , with-utf8
@@ -63,7 +62,6 @@ executable haskell-project-exe
     , http-conduit
     , scotty
     , sqlite-simple
-    , text
     , time
     , unicode-show
     , with-utf8
@@ -85,7 +83,6 @@ test-suite haskell-project-test
     , http-conduit
     , scotty
     , sqlite-simple
-    , text
     , time
     , unicode-show
     , with-utf8

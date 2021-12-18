@@ -16,8 +16,6 @@ module Parse (
 import Types
 import Data.Aeson
 import qualified Data.ByteString.Lazy.Char8 as L8
-import Data.Text
-
 import qualified Data.ByteString.Lazy as BS
 import Data.Aeson (encode,ToJSON(..))
 
@@ -46,9 +44,6 @@ instance ToJSON Events
 -- | Parses the given data to Record data type
 parseRecords :: L8.ByteString -> Either String Record
 parseRecords json = eitherDecode json :: Either String Record
-
--- encodeRecords :: Record  -> L8.ByteString
--- encodeRecords record = encode record
 
 -- | Encodes the data and writes to file
 writeToFile :: ToJSON a => a -> IO ()

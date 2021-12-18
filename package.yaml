@@ -29,7 +29,6 @@ dependencies:
 - with-utf8
 - time
 - scotty
-- text
 
 library:
   source-dirs: src

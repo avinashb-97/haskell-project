@@ -107,7 +107,7 @@ getDivisonFromUser = do
     option <- readLn :: IO Int
     let divisions = ["england-and-wales","scotland","northern-ireland"]  
     let division = if option <=3  then (divisions !! (option-1)) else "" 
-    return $ divisions !! (option-1)
+    return division
 
 -- | Gets all the bank holidays in a division in current year
 queryBankHolidaysForCurrentYear :: Connection -> IO [Event]
